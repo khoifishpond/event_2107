@@ -21,4 +21,30 @@ class Event
       food_truck.inventory.include?(item)
     end
   end
+
+  def total_inventory
+    all_inventory = {}
+    @food_trucks.each do |food_truck|
+      food_truck.inventory.each do |key_item, value_stock|
+        all_inventory[key_item] ||= {quantity: 0, food_trucks: []}
+        all_inventory[key_item][:quantity] += value_stock
+        all_inventory[key_item][:food_trucks] << food_truck
+      end
+    end
+    all_inventory
+  end
+
+  def overstocked_items
+    total_inventory.filter_map do |key_item, value_quantity_food_trucks|
+      if value_quantity_food_trucks[:quantity] > 50 && value_quantity_food_trucks[:food_trucks].size > 1
+        key_item
+      end
+    end
+  end
+
+  def sorted_item_list
+    total_inventory.map do |key_item, value_quantity_food_trucks|
+      key_item.name
+    end.sort
+  end
 end

@@ -53,5 +53,41 @@ describe Event do
       expect(food_truck2.potential_revenue).to eq(345.00)
       expect(food_truck3.potential_revenue).to eq(243.75)
     end
+
+    it 'can provide a total inventory' do
+      food_truck3.stock(item3, 10)
+
+      expect(event.total_inventory).to eq({
+        item1 => {
+          quantity: 100,
+          food_trucks: [food_truck1, food_truck3]
+        },
+        item2 => {
+          quantity: 7,
+          food_trucks: [food_truck1]
+        },
+        item4 => {
+          quantity: 50,
+          food_trucks: [food_truck2]
+        },
+        item3 => {
+          quantity: 35,
+          food_trucks: [food_truck2, food_truck3]
+        }
+      })
+    end
+
+    it 'can find overstocked items' do
+      expect(event.overstocked_items).to eq([item1])
+    end
+
+    it 'can sort all food truck items alphabetically' do
+      expect(event.sorted_item_list).to eq([
+        "Apple Pie (Slice)",
+        "Banana Nice Cream",
+        "Peach Pie (Slice)",
+        "Peach-Raspberry Nice Cream"
+      ])
+    end
   end
 end

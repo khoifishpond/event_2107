@@ -14,6 +14,10 @@ describe Event do
     it 'starts with no food trucks' do
       expect(event.food_trucks).to eq([])
     end
+
+    it 'has a date' do
+      expect(event.date).to eq("2021-08-02")
+    end
   end
 
   context 'Behaviors' do
@@ -88,6 +92,14 @@ describe Event do
         "Peach Pie (Slice)",
         "Peach-Raspberry Nice Cream"
       ])
+    end
+
+    it 'can sell food' do
+      item5 = Item.new({name: 'Onion Pie', price: '$25.00'})
+
+      expect(event.sell(item1, 200)).to eq(false)
+      expect(event.sell(item5, 1)).to eq(false)
+      expect(event.sell(item4, 5)).to eq(true)
     end
   end
 end

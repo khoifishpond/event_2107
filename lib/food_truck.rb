@@ -14,4 +14,12 @@ class FoodTruck
     @inventory[item] ||= 0
     @inventory[item] += quantity
   end
+
+  def potential_revenue
+    revenue = 0
+    @inventory.each do |key_item, value_stock|
+      revenue += key_item.price * value_stock
+    end
+    revenue
+  end
 end

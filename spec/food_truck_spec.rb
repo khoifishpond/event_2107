@@ -42,5 +42,9 @@ describe FoodTruck do
 
       expect(food_truck.inventory).to eq({item1 => 55, item2 => 12})
     end
+
+    it 'can calculate potential revenue of its inventory' do
+      expect(food_truck.potential_revenue).to eq(236.25)
+    end
   end
 end
